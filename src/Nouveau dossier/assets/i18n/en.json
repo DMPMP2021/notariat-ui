@@ -1,0 +1,8 @@
+{
+  "HEADER": { "SEARCH": "SEARCH...", "APP_NAME": "Notarial deeds management" },
+  "NAV": { "HOME": "Dashboard", "ESERVICES": "E-services", "MY_DECL": "My declarations", "NEW_DECL": "New declaration",
+           "PAYMENT": "Payment pending", "TO_CHECK": "To verify", "TO_REGISTER": "To register", "ORDERS": "Orders to collect" },
+  "NOTIF": { "TITLE": "Notifications", "NONE": "No notifications." },
+  "USER": { "LOGOUT": "Log out" },
+  "ROLE": { "Notaire": "Notary", "Inspecteur": "Tax inspector", "Receveur": "Tax collector" }
+}

@@ -1,0 +1,30 @@
+{
+"wilayas":[
+{
+"id":1,
+"name":"usa"
+},
+{
+    "id":2,
+    "name":"germany"
+    },
+    {
+        "id":3,
+        "name":"australia"
+        }
+
+],
+"communes":[
+{"id":1,
+"name":"albania",
+"country_id":1
+},
+{"id":2,
+"name":"arizona",
+"country_id":1
+},{"id":3,
+"name":"california",
+"country_id":1
+}
+]
+}

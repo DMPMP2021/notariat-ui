@@ -1,0 +1,63 @@
+<header class="main-header">
+  <div class="top-bar">
+    <div class="search-box">
+      <input type="search" class="form-control" [(ngModel)]="terme" (ngModelChange)="onSearch()"
+             [placeholder]="'HEADER.SEARCH' | translate" [attr.aria-label]="'HEADER.SEARCH' | translate">
+      <i class="fas fa-search" aria-hidden="true"></i>
+    </div>
+    <span class="contact-info"><i class="fas fa-phone-alt" aria-hidden="true"></i> <span dir="ltr">{{ phone }}</span></span>
+    <span class="contact-info"><i class="fas fa-envelope" aria-hidden="true"></i> {{ email }}</span>
+  </div>
+
+  <div class="main-content-bar">
+    <div class="logo-container">
+      <a class="navbar-brand" [routerLink]="home">
+        <img *ngIf="logoOk" [src]="logoSrc" alt="Logo" width="261" height="73" (error)="logoOk = false">
+        <span class="brand-text" *ngIf="!logoOk">{{ 'HEADER.APP_NAME' | translate }}</span>
+      </a>
+    </div>
+
+    <nav class="main-nav-menu" aria-label="Navigation principale">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="home" routerLinkActive="active"><i class="fas fa-home" aria-hidden="true"></i> {{ 'NAV.HOME' | translate }}</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="liens.length">
+          <a class="nav-link dropdown-toggle" href="#" role="button" (click)="toggleMenu($event)" [attr.aria-expanded]="menuOpen">
+            {{ 'NAV.ESERVICES' | translate }} <i class="fas fa-chevron-down" aria-hidden="true"></i>
+          </a>
+          <ul class="dropdown-menu" *ngIf="menuOpen">
+            <li *ngFor="let l of liens"><a class="dropdown-item" [routerLink]="l.path" routerLinkActive="active">{{ l.key | translate }}</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="user-lang-section">
+      <div class="bell" *ngIf="notif.items$ | async as items">
+        <button type="button" class="bell-btn" (click)="toggleBell($event)" [attr.aria-label]="'NOTIF.TITLE' | translate">
+          <i class="fas fa-bell" aria-hidden="true"></i>
+          <span class="count" *ngIf="nonLues(items) as n">{{ n }}</span>
+        </button>
+        <div class="panel" *ngIf="bellOpen" (click)="$event.stopPropagation()">
+          <p class="panel-title">{{ 'NOTIF.TITLE' | translate }}</p>
+          <p *ngIf="!items.length" class="empty-n">{{ 'NOTIF.NONE' | translate }}</p>
+          <p *ngFor="let n of items" [class.new]="!n.lue">{{ n.message }}<small>{{ n.dateCreation | date:'dd/MM/yyyy HH:mm' }}</small></p>
+        </div>
+      </div>
+
+      <span class="user" *ngIf="auth.user$ | async as u">
+        <i class="fas fa-user-circle" aria-hidden="true"></i>
+        <span>{{ u.nom }}<small>{{ 'ROLE.' + role | translate }}</small></span>
+      </span>
+
+      <select id="ddlLang" class="form-control language-select" #selectedLang (change)="switchLangage(selectedLang.value)" aria-label="Langue">
+        <option *ngFor="let language of translate.getLangs()" [value]="language" [selected]="language === translate.currentLang">{{ langNames[language] || language }}</option>
+      </select>
+
+      <button type="button" class="logout" (click)="logout()" [title]="'USER.LOGOUT' | translate" [attr.aria-label]="'USER.LOGOUT' | translate">
+        <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</header>

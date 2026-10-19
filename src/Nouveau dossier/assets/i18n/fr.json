@@ -1,0 +1,8 @@
+{
+  "HEADER": { "SEARCH": "RECHERCHE...", "APP_NAME": "Gestion des actes notariés" },
+  "NAV": { "HOME": "Tableau de bord", "ESERVICES": "E-services", "MY_DECL": "Mes déclarations", "NEW_DECL": "Nouvelle déclaration",
+           "PAYMENT": "Instance de paiement", "TO_CHECK": "À vérifier", "TO_REGISTER": "À enregistrer", "ORDERS": "Ordres à encaisser" },
+  "NOTIF": { "TITLE": "Notifications", "NONE": "Aucune notification." },
+  "USER": { "LOGOUT": "Déconnexion" },
+  "ROLE": { "Notaire": "Notaire", "Inspecteur": "Inspecteur des impôts", "Receveur": "Receveur" }
+}
