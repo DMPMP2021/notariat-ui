@@ -23,6 +23,7 @@ export const routes: Routes = [
         children: [
           { path: 'dashboard', loadComponent: () => import('./shared/dashboard.component').then(m => m.DashboardComponent) },
           { path: 'a-verifier', loadComponent: () => import('./inspecteur/a-verifier.component').then(m => m.AVerifierComponent) },
+          { path: 'enregistres', loadComponent: () => import('./inspecteur/enregistres.component').then(m => m.EnregistresComponent) },
           { path: 'a-enregistrer', loadComponent: () => import('./inspecteur/a-enregistrer.component').then(m => m.AEnregistrerComponent) },
           { path: '', pathMatch: 'full', redirectTo: 'dashboard' }
         ]

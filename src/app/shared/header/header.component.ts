@@ -70,9 +70,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         { path: '/notaire/instance-paiement', key: 'NAV.PAYMENT' }];
       case 'Inspecteur': return [
         { path: '/inspecteur/a-verifier', key: 'NAV.TO_CHECK' },
-        { path: '/inspecteur/a-enregistrer', key: 'NAV.TO_REGISTER' }];
-      case 'Receveur': return [{ path: '/receveur/ordres', key: 'NAV.ORDERS' }];
-      case 'Verificateur': return [{ path: '/verificateur/a-evaluer', key: 'NAV.TO_EVALUATE' }];
+        { path: '/inspecteur/a-enregistrer', key: 'NAV.TO_REGISTER' },
+        { path: '/inspecteur/enregistres', key: 'NAV.REGISTERED' }];
+      case 'Receveur': return [
+        { path: '/receveur/ordres', key: 'NAV.ORDERS' }
+      ];
+      case 'Verificateur': return [
+        { path: '/verificateur/a-evaluer', key: 'NAV.TO_EVALUATE' }
+      ];
       default: return [];
     }
   }

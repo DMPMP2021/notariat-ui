@@ -1,64 +1,253 @@
-:root {
-  --ink: #1d2733; --muted: #5d6b7a; --line: #d9dee4; --bg: #f2f4f6; --card: #fff;
-  --brand: #0e5a4a; --brand-ink: #fff; --danger: #a63d2f; --warn: #9a6a00; --ok: #1d6b3a;
-  --radius: 6px;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
-h1, h2 { font-family: "Palatino Linotype", Palatino, Georgia, serif; font-weight: 600; margin: 0 0 .75rem; }
-h1 { font-size: 1.6rem; }
-h2 { font-size: 1.2rem; }
-a { color: var(--brand); }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; }
-.page { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
-.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); }
-th, td { text-align: left; padding: .65rem .8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-th { font-weight: 600; background: #eaeef1; font-size: .85rem; }
-td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-.table-wrap { overflow-x: auto; }
-button, .btn { font: inherit; cursor: pointer; border: 1px solid var(--brand); background: var(--brand); color: var(--brand-ink);
-  padding: .45rem .9rem; border-radius: var(--radius); text-decoration: none; display: inline-block; }
-button.ghost, .btn.ghost { background: transparent; color: var(--brand); }
-button.danger { background: var(--danger); border-color: var(--danger); }
-button:disabled { opacity: .5; cursor: not-allowed; }
-button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px solid #f0b429; outline-offset: 2px; }
-.actions { display: flex; gap: .4rem; flex-wrap: wrap; }
-label { display: block; font-weight: 600; margin-bottom: .25rem; }
-input, textarea { width: 100%; font: inherit; padding: .5rem .6rem; border: 1px solid #aeb7c0; border-radius: var(--radius); background: #fff; }
-.field { margin-bottom: 1rem; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
-@media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
-.badge { display: inline-block; padding: .1rem .55rem; border-radius: 999px; font-size: .8rem; border: 1px solid currentColor; white-space: nowrap; }
-.s-Brouillon { color: var(--muted); } .s-Soumise { color: var(--warn); } .s-Rejetee { color: var(--danger); }
-.s-InstancePaiement { color: #1f5fa8; } .s-Payee { color: var(--ok); } .s-Enregistree { color: var(--brand); font-weight: 600; }
-.error { color: var(--danger); margin: .5rem 0; }
-.empty { padding: 2rem; text-align: center; color: var(--muted); background: var(--card); border: 1px dashed var(--line); }
-.motif { color: var(--danger); font-size: .88rem; margin-top: .2rem; }
-.modal-bg { position: fixed; inset: 0; background: rgba(20,30,40,.5); display: grid; place-items: center; padding: 1rem; z-index: 50; }
-.modal { width: min(480px, 100%); }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
-.container-fluid {
-  width: 100%;
-  margin-inline: auto;
-  box-sizing: border-box;
-  padding-inline: clamp(0.75rem, 3vw, 2.5rem);   /* 12 px sur téléphone → 40 px sur grand écran */
-}
+/* =====================================================================
+   Gestion des actes notariés : feuille de style globale
+   Remplace src/styles.scss.
+   Les couleurs se changent dans le bloc :root (premières lignes).
 
-/* Téléphone */
-@media (max-width: 600px) {
-  .toolbar { flex-direction: column; align-items: stretch; }
-  .toolbar .btn, .toolbar button { width: 100%; text-align: center; }
-  .actions { flex-direction: column; align-items: stretch; }
-  .actions button, .actions .btn { width: 100%; text-align: center; }
-  .grid2 { grid-template-columns: 1fr; }
-}
+   Icônes FontAwesome : uniquement si vous utilisez le nouvel en-tête
+   (paquet @fortawesome/fontawesome-free installé), décommentez :
+   @import '@fortawesome/fontawesome-free/css/all.min.css';
+   ===================================================================== */
 
-/* Tablette */
-@media (min-width: 601px) and (max-width: 992px) {
-  h1 { font-size: 1.4rem; }
-  .modal { width: min(560px, 92vw); }
-}
-
-/* Tableaux : défilement horizontal si l'écran est trop étroit */
-.table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+   :root {
+    color-scheme: light;
+  
+    /* Palette institutionnelle */
+    --brand: #0b3b2e;          /* vert foncé : en-têtes, boutons */
+    --brand-600: #0e5a4a;      /* vert : survol */
+    --brand-50: #eaf3f0;       /* vert très clair : fonds, survols */
+    --brand-ink: #ffffff;      /* texte sur fond vert */
+    --accent: #9e2a39;         /* rouge : liens actifs, repères */
+    --teal: #07bd9e;
+  
+    /* Texte, fonds, bordures */
+    --ink: #1b2733;
+    --muted: #5b6b7b;
+    --line: #dfe4ea;
+    --bg: #f3f5f7;
+    --card: #ffffff;
+  
+    /* États */
+    --ok: #1d7a46;     --ok-bg: #e7f5ec;
+    --warn: #a86a00;   --warn-bg: #fdf3dc;
+    --danger: #b3261e; --danger-bg: #fbe9e7;
+    --info: #1f5fa8;   --info-bg: #e8f0fb;
+  
+    /* Forme */
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px rgba(16, 24, 40, .06), 0 1px 3px rgba(16, 24, 40, .08);
+    --shadow-md: 0 4px 12px rgba(16, 24, 40, .10);
+    --shadow-lg: 0 12px 32px rgba(16, 24, 40, .22);
+    --focus: #f0b429;
+  
+    /* Typographie */
+    --font: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-title: "Palatino Linotype", Palatino, Georgia, serif;
+  }
+  
+  /* ---------- Base ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.55 var(--font);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 { font-family: var(--font-title); color: var(--ink); font-weight: 600; line-height: 1.25; margin: 0 0 .75rem; }
+  h1 { font-size: clamp(1.35rem, 2.2vw, 1.75rem); }
+  h2 { font-size: 1.15rem; }
+  h3 { font-size: 1rem; }
+  p { margin: 0 0 .75rem; }
+  a { color: var(--brand); text-underline-offset: 2px; }
+  a:hover { color: var(--accent); }
+  img { max-width: 100%; height: auto; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 1rem 0; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  ::selection { background: #cfe5de; }
+  
+  /* ---------- Mise en page ---------- */
+  .page { max-width: none; margin: 0; padding: 1.25rem clamp(.75rem, 3vw, 2.5rem) 2.5rem; }
+  app-layout { display: flex; flex-direction: column; min-height: 100vh; }
+  app-layout > .page { flex: 1; display: flex; flex-direction: column; }
+  .container-fluid { width: 100%; margin-inline: auto; padding-inline: clamp(.75rem, 3vw, 2.5rem); }
+  /* les formulaires restent lisibles : ils ne s'étirent pas sur tout l'écran */
+  .page form.card { width: 100%; max-width: 920px; margin-inline: auto; }
+  
+  .toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem 1rem; margin-bottom: 1rem; }
+  .toolbar h1 { margin: 0; }
+  .page > h1, .toolbar h1 { padding-inline-start: .75rem; border-inline-start: 4px solid var(--accent); }
+  
+  /* ---------- Cartes ---------- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .card > h2:first-child, .card > h1:first-child { margin-top: 0; }
+  
+  /* ---------- Boutons : une couleur par type d'action ----------
+     (sans classe)  vert foncé : action principale (enregistrer...)
+     b-ok           vert       : valider, créer
+     danger         rouge      : rejeter
+     b-info         bleu       : envoyer, soumettre
+     b-warn         orange     : encaisser, payer, modifier
+     b-violet       violet     : évaluer, réévaluer
+     b-doc          ardoise    : imprimer, PDF, télécharger
+     b-neutral      gris       : annuler, fermer
+     ghost          version « contour » de n'importe quelle couleur
+     Exemple : <button class="b-warn ghost">Modifier</button> */
+  button, .btn {
+    --c: var(--brand); --c-h: var(--brand-600); --c-bg: var(--brand-50);
+    display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+    font: inherit; font-size: .9rem; font-weight: 600; line-height: 1.2;
+    padding: .55rem 1rem;
+    border: 1px solid var(--c); border-radius: var(--radius);
+    background: var(--c); color: #fff;
+    text-decoration: none; cursor: pointer;
+    transition: background-color .15s, border-color .15s, box-shadow .15s, transform .05s;
+  }
+  button:hover:not(:disabled), .btn:hover { background: var(--c-h); border-color: var(--c-h); color: #fff; box-shadow: var(--shadow-sm); }
+  button:active:not(:disabled), .btn:active { transform: translateY(1px); }
+  button.ghost, .btn.ghost { background: transparent; color: var(--c); }
+  button.ghost:hover:not(:disabled), .btn.ghost:hover { background: var(--c-bg); border-color: var(--c); color: var(--c-h); }
+  button.sm, .btn.sm { padding: .3rem .65rem; font-size: .8rem; }
+  button:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+  
+  .b-ok      { --c: #1d7a46; --c-h: #166037; --c-bg: #e7f5ec; }
+  .danger    { --c: #b3261e; --c-h: #8f1f18; --c-bg: #fbe9e7; }
+  .b-info    { --c: #1f5fa8; --c-h: #184c87; --c-bg: #e8f0fb; }
+  .b-warn    { --c: #c76b00; --c-h: #a35600; --c-bg: #fdf0dc; }
+  .b-violet  { --c: #5b3fa5; --c-h: #49328a; --c-bg: #efeafa; }
+  .b-doc     { --c: #334155; --c-h: #1f2937; --c-bg: #eef1f5; }
+  .b-neutral { --c: #5b6b7b; --c-h: #46545f; --c-bg: #eef1f4; }
+  
+  /* En-tête de l'ancienne mise en page : dégradé aux couleurs de la DGI */
+  app-layout > header {
+    background: linear-gradient(to right, #9e2a39 0%, #0b3b2e 100%) !important;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .actions { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; }
+  td.actions { display: table-cell; }
+  td.actions > button, td.actions > .btn { margin-inline-end: .35rem; margin-block-end: .3rem; }
+  
+  /* ---------- Formulaires ---------- */
+  label { display: block; margin-bottom: .3rem; font-size: .85rem; font-weight: 600; color: var(--ink); }
+  input:not([type=checkbox]):not([type=radio]):not([type=range]), select, textarea {
+    width: 100%;
+    font: inherit; color: var(--ink);
+    background: #fff;
+    border: 1px solid #b8c2cc; border-radius: var(--radius);
+    padding: .55rem .7rem;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input[type=file] { padding: .4rem; background: #fafbfc; }
+  textarea { resize: vertical; min-height: 4.5rem; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(11, 59, 46, .18); }
+  input::placeholder, textarea::placeholder { color: #8795a3; }
+  input:disabled, select:disabled, textarea:disabled { background: #eef1f4; color: var(--muted); cursor: not-allowed; }
+  input.ng-invalid.ng-touched, select.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched { border-color: var(--danger); }
+  input[type=checkbox], input[type=radio] { width: 1.1rem; height: 1.1rem; accent-color: var(--brand); vertical-align: middle; }
+  select { cursor: pointer; }
+  
+  .field { margin-bottom: 1rem; }
+  .field small { display: block; margin-top: .25rem; color: var(--muted); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+  
+  /* ---------- Tableaux ---------- */
+  .table-wrap {
+    width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+  }
+  table { width: 100%; border-collapse: collapse; background: #fff; font-size: .9rem; }
+  .table-wrap table { border: none; }
+  th, td { padding: .7rem .85rem; text-align: start; vertical-align: top; border-bottom: 1px solid var(--line); }
+  th { background: #f1f4f7; color: #3a4b5c; font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
+  tr:nth-child(even) td { background: #fafbfc; }
+  tr:hover td { background: var(--brand-50); }
+  tr:last-child td { border-bottom: none; }
+  td.num, th.num { text-align: end; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  
+  /* ---------- Pastilles de statut ---------- */
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: .15rem .6rem; border: 1px solid currentColor; border-radius: 999px;
+    background: #fff; font-size: .75rem; font-weight: 700; line-height: 1.4; white-space: nowrap;
+  }
+  .s-Brouillon { color: var(--muted); background: #f1f4f7; }
+  .s-Soumise { color: var(--warn); background: var(--warn-bg); }
+  .s-Rejetee { color: var(--danger); background: var(--danger-bg); }
+  .s-InstancePaiement { color: var(--info); background: var(--info-bg); }
+  .s-Payee { color: var(--ok); background: var(--ok-bg); }
+  .s-Enregistree { color: var(--brand); background: var(--brand-50); }
+  /* évaluation du vérificateur */
+  .c-Conforme { color: var(--ok); background: var(--ok-bg); }
+  .c-SousEvalue { color: var(--danger); background: var(--danger-bg); }
+  .c-SurEvalue { color: var(--info); background: var(--info-bg); }
+  .badge.none { color: var(--muted); background: #f1f4f7; }
+  
+  /* ---------- Messages ---------- */
+  .error {
+    margin: .5rem 0 1rem; padding: .6rem .8rem;
+    color: var(--danger); background: var(--danger-bg);
+    border-inline-start: 4px solid var(--danger); border-radius: var(--radius); font-size: .9rem;
+  }
+  td .error, .modal .error { margin: .4rem 0; }
+  .empty {
+    padding: 2.25rem 1rem; text-align: center; color: var(--muted);
+    background: #fff; border: 1px dashed #c5ced8; border-radius: var(--radius-lg);
+  }
+  .motif { margin-top: .25rem; color: var(--danger); font-size: .82rem; }
+  .muted { color: var(--muted); }
+  
+  /* ---------- Fenêtres modales ---------- */
+  .modal-bg {
+    position: fixed; inset: 0; z-index: 100;
+    display: grid; place-items: center; padding: 1rem; overflow-y: auto;
+    background: rgba(15, 23, 32, .55); backdrop-filter: blur(2px);
+    animation: fondu .15s ease-out;
+  }
+  .modal {
+    width: min(480px, 100%); max-height: calc(100vh - 2rem); overflow-y: auto;
+    box-shadow: var(--shadow-lg); animation: apparition .18s ease-out;
+  }
+  .modal h2 { margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 1px solid var(--line); }
+  @keyframes fondu { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes apparition { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+  
+  /* ---------- Défilement ---------- */
+  .table-wrap::-webkit-scrollbar, .modal::-webkit-scrollbar { height: 10px; width: 10px; }
+  .table-wrap::-webkit-scrollbar-thumb, .modal::-webkit-scrollbar-thumb { background: #c5ced8; border-radius: 8px; }
+  
+  /* ---------- Tablette ---------- */
+  @media (max-width: 992px) {
+    .modal { width: min(560px, 94vw); }
+  }
+  
+  /* ---------- Téléphone ---------- */
+  @media (max-width: 600px) {
+    .toolbar { flex-direction: column; align-items: stretch; }
+    .toolbar > .btn, .toolbar > button { width: 100%; }
+    .actions:not(td) { flex-direction: column; align-items: stretch; }
+    .actions:not(td) > * { width: 100%; }
+    .grid2 { grid-template-columns: 1fr; }
+    th, td { padding: .5rem .55rem; font-size: .85rem; }
+    td:first-child { white-space: nowrap; }
+    .modal { padding: 1rem; }
+  }
+  
+  /* ---------- Accessibilité et impression ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+  @media print {
+    header, app-header, nav, button, .btn, .toast, .modal-bg { display: none !important; }
+    body { background: #fff; }
+    .page { padding: 0; }
+    .card, .table-wrap { box-shadow: none; }
+  }

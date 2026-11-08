@@ -1,0 +1,65 @@
+<div class="notif-wrapper">
+    <!-- Bouton Cloche -->
+    <button class="icon-btn" (click)="toggleMenu()" aria-label="Notifications">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+      </svg>
+  
+      <!-- Badge compteur -->
+      <span *ngIf="unreadCount > 0" class="badge">
+        {{ unreadCount > 99 ? '99+' : unreadCount }}
+      </span>
+    </button>
+  
+    <!-- Overlay transparent pour fermer au clic extérieur -->
+    <div *ngIf="isOpen" class="notif-backdrop" (click)="closeMenu()"></div>
+  
+    <!-- Popover / Dropdown des notifications -->
+    <div *ngIf="isOpen" class="notif-dropdown">
+      <!-- Header -->
+      <div class="notif-header">
+        <div class="title-group">
+          <h3>Notifications</h3>
+          <span class="count-pill" *ngIf="unreadCount > 0">{{ unreadCount }} non lue(s)</span>
+        </div>
+        <button class="btn-read-all" (click)="markAllAsRead()" [disabled]="unreadCount === 0">
+          Tout marquer comme lu
+        </button>
+      </div>
+  
+      <!-- Liste des notifications -->
+      <div class="notif-list">
+        <div 
+          *ngFor="let notif of notifications" 
+          class="notif-item" 
+          [class.unread]="!notif.lue"
+          [class.clickable]="!!notif.declarationId"
+          (click)="onNotifClick(notif)">
+          
+          <div class="notif-status-dot" *ngIf="!notif.lue"></div>
+  
+          <div class="notif-content">
+            <p class="notif-message">{{ notif.message }}</p>
+            <span class="notif-time">{{ notif.dateCreation | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+  
+          <div class="notif-arrow" *ngIf="notif.declarationId">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </div>
+  
+        <!-- État vide -->
+        <div *ngIf="notifications.length === 0" class="notif-empty">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M22 13c0 5-3.5 9-10 9s-10-4-10-9 3.5-9 10-9 10 4 10 9z"></path>
+            <path d="M12 8v4"></path>
+            <path d="M12 16h.01"></path>
+          </svg>
+          <p>Aucune notification pour le moment</p>
+        </div>
+      </div>
+    </div>
+  </div>
